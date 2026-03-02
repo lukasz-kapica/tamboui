@@ -1,9 +1,10 @@
 package dev.tamboui.tui.event;
 
-import dev.tamboui.terminal.Backend;
-import dev.tamboui.tui.bindings.Bindings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import dev.tamboui.terminal.Backend;
+import dev.tamboui.tui.bindings.Bindings;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
