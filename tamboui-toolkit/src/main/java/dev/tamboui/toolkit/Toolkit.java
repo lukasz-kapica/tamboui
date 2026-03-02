@@ -1290,18 +1290,13 @@ public final class Toolkit {
                 state.moveCursorToEnd();
                 return true;
             case CHAR:
-                // AltGr on Windows is reported as Ctrl+Alt — allow it for character input.
-                // Block only standalone Ctrl or Alt, which indicate control sequences.
-                boolean isAltGr = event.modifiers().ctrl() && event.modifiers().alt();
-                if (!isAltGr && (event.modifiers().ctrl() || event.modifiers().alt())) {
+                // Don't consume characters with Ctrl or Alt modifiers - those are control sequences
+                if (event.modifiers().ctrl() || event.modifiers().alt()) {
                     return false;
                 }
                 char c = event.character();
-                if (!Character.isISOControl(c)) {
-                    state.insert(c);
-                    return true;
-                }
-                return false;
+                state.insert(c);
+                return true;
             default:
                 return false;
         }
