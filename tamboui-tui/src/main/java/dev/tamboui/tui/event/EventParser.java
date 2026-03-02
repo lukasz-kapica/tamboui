@@ -70,14 +70,12 @@ public final class EventParser {
             return parseControlChar(c, bindings);
         }
 
-        boolean isPrintable = Character.isDefined(c) && !Character.isISOControl(c);
-
-        // Regular printable character
-        if (isPrintable) {
-            return KeyEvent.ofChar((char) c, bindings);
+        if (!isPrintable(c)) {
+            return KeyEvent.ofKey(KeyCode.UNKNOWN);
         }
 
-        return KeyEvent.ofKey(KeyCode.UNKNOWN);
+        // Regular printable character
+        return KeyEvent.ofChar((char) c, bindings);
     }
 
     private static Event parseControlChar(int c, Bindings bindings) {
@@ -408,5 +406,15 @@ public final class EventParser {
         }
 
         return new MouseEvent(kind, mouseButton, x, y, mods, bindings);
+    }
+
+    private static boolean isPrintable(int c) {
+        int type = Character.getType(c);
+        return Character.isDefined(c)
+                && !Character.isISOControl(c)
+                && type != Character.FORMAT          // Cf – Word Joiner, ZWJ, ZWNJ, itp.
+                && type != Character.SURROGATE        // Cs
+                && type != Character.PRIVATE_USE      // Co
+                && type != Character.UNASSIGNED;      // Cn
     }
 }
