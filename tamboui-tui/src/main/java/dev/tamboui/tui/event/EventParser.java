@@ -70,9 +70,9 @@ public final class EventParser {
             return parseControlChar(c, bindings);
         }
 
-        if (!isPrintable(c)) {
-            return KeyEvent.ofKey(KeyCode.UNKNOWN);
-        }
+//        if (!isPrintable(c)) {
+//            return KeyEvent.ofKey(KeyCode.UNKNOWN);
+//        }
 
         // Regular printable character
         return KeyEvent.ofChar((char) c, bindings);
